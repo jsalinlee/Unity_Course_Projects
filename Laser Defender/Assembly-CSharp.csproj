@@ -46,12 +46,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Entities\Enemies\EnemyBehaviour.cs" />
      <Compile Include="Assets\Entities\EnemyFormation\EnemySpawner.cs" />
      <Compile Include="Assets\Entities\EnemyFormation\Position.cs" />
      <Compile Include="Assets\Entities\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MusicPlayer.cs" />
-     <Compile Include="Assets\Shredder.cs" />
+     <Compile Include="Assets\Scripts\Projectile.cs" />
+     <Compile Include="Assets\Scripts\Scoreboard.cs" />
+     <Compile Include="Assets\Scripts\Shredder.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>

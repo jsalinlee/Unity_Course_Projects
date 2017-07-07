@@ -9,11 +9,14 @@ public class PlayerController : MonoBehaviour {
 	public float padding = 1f;
 	public float laserSpeed;
 	public float firingRate = 0.2f;
+	public float health;
+	public ParticleSystem thrusters;
 
 	float xmin;
 	float xmax;
 
 	void Start () {
+		Instantiate(thrusters, transform);
 		float distance = transform.position.z - Camera.main.transform.position.z;
 		Vector3 leftmost = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
 		Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance));
@@ -23,8 +26,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Fire() {
-		Vector3 laserPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, 0);
-		GameObject laser = Instantiate(laserPrefab, laserPosition, Quaternion.identity) as GameObject;
+		Vector3 laserPosition = new Vector3(0, 0.7f, 0);
+		GameObject laser = Instantiate(laserPrefab, transform.position + laserPosition, Quaternion.identity) as GameObject;
 		laser.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserSpeed, 0);
 	}
 
@@ -45,5 +48,16 @@ public class PlayerController : MonoBehaviour {
 		// Restrict the player to the gamespace
 		float newX = Mathf.Clamp(transform.position.x, xmin, xmax);
 		transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+	}
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		Projectile missile = collider.gameObject.GetComponent<Projectile>();
+		if(missile) {
+			health -= missile.GetDamage();
+			missile.Hit();
+			if(health <= 0) {
+				Destroy(gameObject);
+			}
+		}
 	}
 }
