@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour {
 	public float health;
 	public ParticleSystem thrusters;
 
+	public AudioClip fireSound;
+
 	float xmin;
 	float xmax;
 
@@ -26,9 +28,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Fire() {
-		Vector3 laserPosition = new Vector3(0, 0.7f, 0);
-		GameObject laser = Instantiate(laserPrefab, transform.position + laserPosition, Quaternion.identity) as GameObject;
+		GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
 		laser.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserSpeed, 0);
+		AudioSource.PlayClipAtPoint(fireSound, transform.position);
 	}
 
 	void Update () {
@@ -56,8 +58,14 @@ public class PlayerController : MonoBehaviour {
 			health -= missile.GetDamage();
 			missile.Hit();
 			if(health <= 0) {
-				Destroy(gameObject);
+				Die();
 			}
 		}
+	}
+
+	void Die() {
+		LevelManager man = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+		man.LoadLevel("Win");
+		Destroy(gameObject);
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Scoreboard : MonoBehaviour {
-	public int score = 0;
+	public static int score = 0;
 	private Text scoreText;
 
 	void Start() {
@@ -17,8 +17,7 @@ public class Scoreboard : MonoBehaviour {
 		scoreText.text = score.ToString();
 	}
 
-	public void Reset() {
+	public static void Reset() {
 		score = 0;
-		scoreText.text = score.ToString();
 	}
 }
